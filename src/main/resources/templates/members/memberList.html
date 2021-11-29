@@ -1,0 +1,30 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/header1 :: header" />
+<body>
+<div class="container">
+    <div th:replace="fragments/bodyHeader :: bodyHeader" />
+    <div>
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Generation</th>
+                <th>CreateDate</th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="member : ${members}">
+                <td><a href="myPage.html" th:href="@{|/admin/mypage/${member.id}|}" th:text="${member.id}"></a></td>
+                <td th:text="${member.name}"></td>
+                <td th:text="${member.generation}"></td>
+                <td th:text="${member.createDate}"></td>
+            </tr>
+            </tbody></table>
+    </div>
+    <div th:replace="fragments/footer :: footer" />
+</div> <!-- /container -->
+</body>
+</html>

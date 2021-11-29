@@ -1,0 +1,87 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/header1 :: header" />
+<body>
+<div class="container">
+    <div th:replace="fragments/bodyHeader :: bodyHeader"/>
+        <H2> 님의 고민 </H2>
+        <div class="form-group">
+            <label th:for="title">Title</label>
+            <input type="text" th:field="*{worry.title}" class="form-control" readonly>
+        </div>
+        <div class="form-group">
+            <label th:for="content"> 내용 </label>
+            <input type="text" th:field="*{worry.content}" class="form-control" readonly>
+        </div>
+        <div>
+            <div>세대</div>
+            <div th:each="generation : ${generations}" class="form-check form-check-inline">
+                <input type="radio" th:field="*{worry.generation}" th:value="${generation.name()}" class="form-check-input" disabled>
+                <label th:for="${#ids.prev('generation')}" th:text="${generation.description}" class="form-check-label">20-30대</label>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label th:for="createDate">등록일</label>
+            <input type="text" th:field="*{worry.createDate}" class="form-control" readonly>
+        </div>
+        <div class="form-group">
+            <label th:for="solvedStatus">solved 유무</label>
+            <input type="text" th:field="*{worry.solvedStatus}" class="form-control" readonly>
+        </div>
+    <br/>
+    <div class="row">
+        <div class="col">
+            <button class="w-100 btn btn-primary btn-lg"
+                    onclick="location.href='updateWorryForm.html'"
+                    th:onclick="|location.href='@{/worrys/{worryId}/edit (worryId=${worry.id})}'|" type="button"> 고민 수정 </button>
+           <!-- <a href="#" th:href="@{/worrys/{id}/edit (id=${worry.id})}"
+               class="btn btn-primary" role="button">수정</a>-->
+        </div>
+        <div class="col">
+            <button class="w-100 btn btn-secondary btn-lg"
+                    onclick="location.href='worryList.html'"
+                    th:onclick="|location.href='@{/worrys}'|"
+                    type="button">목록으로</button>
+        </div>
+    </div>
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>#</th>
+            <th>content</th>
+            <th>글쓴이</th>
+            <th>글쓴 날짜</th>
+            <th>solved</th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody><tr th:each="solution : ${solutions}">
+            <td th:text="${solution.id}"></td>
+            <td th:text="${solution.content}"></td>
+            <td th:text="${solution.member.id}"></td>
+            <td th:text="${solution.createDate}"></td>
+            <td><a th:if="${solution.acceptedStatus.name() == 'READY' }"
+                   href="#" th:href="'javascript:accept('+${solution.id}+')'" class="btn btn-danger">accept</a>
+            </td>
+            <td>
+                <a href="#" th:href="@{/solutions/{id}/edit (id=${solution.id})}"
+                   class="btn btn-primary" role="button">수정</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+
+</div> <!-- /container -->
+</body>
+<script>
+    function accept(solutionId){
+        var form = document.createElement("form");
+        form.setAttribute("method", "post");
+        form.setAttribute("action", "/solutions/" + solutionId + "/accept");
+        document.body.appendChild(form);
+        form.submit();
+    }
+</script>
+</html>
