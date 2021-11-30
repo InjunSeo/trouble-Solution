@@ -9,6 +9,9 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.StringUtils;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -43,10 +46,23 @@ public class WorryController {
     }
 
     @PostMapping("/worrys/new")
-    public String create(WorryForm form) {
+    public String create(@ModelAttribute WorryForm form, BindingResult bindingResult) {
         log.info("form.generation={}", form.getGeneration());
         log.info("form.categories={}", form.getCategoryId());
+        if (!StringUtils.hasText(form.getTitle())) {
+            bindingResult.addError(new FieldError("form", "title", "You must input the title."));
+        }
+        if (!StringUtils.hasText(form.getContent())) {
+            bindingResult.addError(new FieldError("form", "content", "You must write the content of your trouble."));
+        }
+        if (form.getGeneration() == null) {
+            bindingResult.addError(new FieldError("form", "generation", "Check the generation you want to share the trouble."));
+        }
 
+        if (bindingResult.hasErrors()) {
+            log.info("errors={}", bindingResult);
+            return "/worrys/createWorryForm";
+        }
         Worry worry = new Worry();
         worry.setMember(form.getMember());
         worry.setTitle(form.getTitle());
