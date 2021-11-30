@@ -28,6 +28,9 @@
 
 ## 3. Solution Domain
 ### 3.1. Solution Entity
+* 답변 등록
+* 답변 조회
+* 답변 수정
 ### 3.2. Class
 ___
 ## 4. Controller
