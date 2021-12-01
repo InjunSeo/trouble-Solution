@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import javax.validation.Valid;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -46,18 +47,9 @@ public class WorryController {
     }
 
     @PostMapping("/worrys/new")
-    public String create(@ModelAttribute WorryForm form, BindingResult bindingResult) {
+    public String create(@Valid WorryForm form, BindingResult bindingResult) {
         log.info("form.generation={}", form.getGeneration());
         log.info("form.categories={}", form.getCategoryId());
-        if (!StringUtils.hasText(form.getTitle())) {
-            bindingResult.addError(new FieldError("form", "title", "You must input the title."));
-        }
-        if (!StringUtils.hasText(form.getContent())) {
-            bindingResult.addError(new FieldError("form", "content", "You must write the content of your trouble."));
-        }
-        if (form.getGeneration() == null) {
-            bindingResult.addError(new FieldError("form", "generation", "Check the generation you want to share the trouble."));
-        }
 
         if (bindingResult.hasErrors()) {
             log.info("errors={}", bindingResult);
