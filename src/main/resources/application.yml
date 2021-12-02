@@ -11,6 +11,8 @@ spring:
       hibernate:
 #        show-sql: true
         format_sql: true
+  messages:
+    basename: messages,errors
 
 logging:
   level:
