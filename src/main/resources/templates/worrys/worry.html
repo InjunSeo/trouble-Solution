@@ -20,6 +20,15 @@
                 <label th:for="${#ids.prev('generation')}" th:text="${generation.description}" class="form-check-label">20-30대</label>
             </div>
         </div>
+        <!-- multi checkbox -->
+        <div>
+            <div>Categories</div>
+            <div th:each="category : ${categories}" class="form-check form-check-inline">
+                <input type="checkbox" th:field="*{worry.categoryWorries}" th:value="${category.id}" class="form-check-input" disabled>
+                <label th:for="${#ids.prev('categoryWorries')}" th:text="${category.name}" class="form-check-label">운동</label>
+            </div>
+        </div>
+
 
         <div class="form-group">
             <label th:for="createDate">등록일</label>
@@ -29,6 +38,7 @@
             <label th:for="solvedStatus">solved 유무</label>
             <input type="text" th:field="*{worry.solvedStatus}" class="form-control" readonly>
         </div>
+    <hr class="my-4">
     <br/>
     <div class="row">
         <div class="col">

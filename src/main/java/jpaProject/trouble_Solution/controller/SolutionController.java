@@ -1,8 +1,10 @@
 package jpaProject.trouble_Solution.controller;
 
+import jpaProject.trouble_Solution.domain.Categories;
 import jpaProject.trouble_Solution.domain.GenerationStatus;
 import jpaProject.trouble_Solution.domain.Solution;
 import jpaProject.trouble_Solution.domain.Worry;
+import jpaProject.trouble_Solution.repository.CategoriesRepositoryImpl;
 import jpaProject.trouble_Solution.service.SolutionService;
 import jpaProject.trouble_Solution.service.WorryService;
 import lombok.RequiredArgsConstructor;
@@ -20,10 +22,18 @@ import java.util.List;
 public class SolutionController {
     private final SolutionService solutionService;
     private final WorryService worryService;
+    private final CategoriesRepositoryImpl categoriesRepository;
 
     @ModelAttribute("generations")
     public GenerationStatus[] generationStatuses(){
         return GenerationStatus.values();
+    }
+
+    @ModelAttribute("categories")
+    public List<Categories> categories(){
+        List<Categories> categoriesList = categoriesRepository.findAll();
+
+        return categoriesList;
     }
     @GetMapping("/worrys/{worryId}")
     public String worry(@PathVariable Long worryId, Model model) {
