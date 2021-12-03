@@ -1,5 +1,6 @@
 package jpaProject.trouble_Solution.service;
 
+import jpaProject.trouble_Solution.domain.Categories;
 import jpaProject.trouble_Solution.domain.Member;
 import jpaProject.trouble_Solution.domain.Worry;
 
