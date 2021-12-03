@@ -12,12 +12,12 @@ import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
-import javax.validation.Valid;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -42,26 +42,27 @@ public class WorryController {
 
     @GetMapping("/worrys/new")
     public String createForm(Model model) {
-        model.addAttribute("form", new WorryForm());
+        model.addAttribute("worryForm", new WorryForm());
         return "worrys/createWorryForm";
     }
 
     @PostMapping("/worrys/new")
-    public String create(@Valid WorryForm form, BindingResult bindingResult) {
-        log.info("form.generation={}", form.getGeneration());
-        log.info("form.categories={}", form.getCategoryId());
+    public String create(@Validated @ModelAttribute("worryForm") WorrySaveForm worryForm, BindingResult result) {
+        log.info("form.generation={}", worryForm.getGeneration());
+        log.info("form.categories={}", worryForm.getCategoryId());
 
-        if (bindingResult.hasErrors()) {
-            log.info("errors={}", bindingResult);
+        if (result.hasErrors()) {
+            log.info("errors={}", result);
             return "/worrys/createWorryForm";
         }
+
         Worry worry = new Worry();
-        worry.setMember(form.getMember());
-        worry.setTitle(form.getTitle());
-        worry.setContent(form.getContent());
-        worry.setGeneration(form.getGeneration());
+        worry.setMember(worryForm.getMember());
+        worry.setTitle(worryForm.getTitle());
+        worry.setContent(worryForm.getContent());
+        worry.setGeneration(worryForm.getGeneration());
         worry.setCreateDate(LocalDateTime.now());
-        List<Long> categoryId = form.getCategoryId();
+        List<Long> categoryId = worryForm.getCategoryId();
         for (Long aLong : categoryId) {
             Categories categories = categoriesRepository.finById(aLong);
             worry.addCategory(categories);
@@ -93,11 +94,11 @@ public class WorryController {
     }
 
     @PostMapping("worrys/{worryId}/edit")
-    public String updateWorry(@PathVariable Long worryId, @ModelAttribute("form") WorryForm form) {
+    public String updateWorry(@PathVariable Long worryId, @ModelAttribute("form") WorryForm worryForm) {
 
-        log.info("form.generation ={}", form.getGeneration());
+        log.info("form.generation ={}", worryForm.getGeneration());
 
-        worryService.updateWorry(worryId, form.getTitle(), form.getContent());
+        worryService.updateWorry(worryId, worryForm.getTitle(), worryForm.getContent());
         return "redirect:/worrys/{worryId}";
     }
 

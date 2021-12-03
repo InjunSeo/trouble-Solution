@@ -5,7 +5,9 @@ import jpaProject.trouble_Solution.domain.Member;
 import lombok.Getter;
 import lombok.Setter;
 
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -22,9 +24,10 @@ public class WorryForm {
     private String content;
 
     private LocalDateTime createDate;
-
+    @NotNull(message = "세대 선택은 필수입니다.")
     private GenerationStatus generation;
 
+    @NotEmpty(message = "카테고리를 선택해주세요.")
     private List<Long> categoryId;
 
 
