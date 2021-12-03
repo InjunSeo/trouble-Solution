@@ -5,14 +5,13 @@ import jpaProject.trouble_Solution.domain.Member;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 import java.util.List;
 
 @Getter @Setter
-public class WorryForm {
+public class WorrySaveForm {
     private Long id;
 
     private Member member;
