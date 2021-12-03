@@ -1,15 +1,12 @@
-# GominNo: BackEnd 개발
+# Trouble-solution: BackEnd
+___
 ## 1. Member Domain
-### 1.1. 구현 기능
+### 1.1. 회원 관련
 * 회원 등록
-* 회원 목록 조회
-  1. 아이디로 조회
-  2. 이름으로 조회
-  3. 모두 조회
-### 1.2. Class
-#### Member Entity
-#### Member Repository
-#### Member Service
+![이미지](img/gominNO_SignUp.png "SignUp")
+*회원 목록 조회
+  
+### 1.2. 
 
 ## 2. Worry Domain
 ### 2.1. 구현 기능
