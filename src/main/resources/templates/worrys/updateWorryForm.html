@@ -12,8 +12,10 @@
             <input type="text" th:field="*{title}" class="form-control" placeholder="title을 입력하세요" />
         </div>
         <div class="form-group">
-            <label th:for="content">content</label>
-            <input type="text" th:field="*{content}" class="form-control" placeholder="content 입력하세요" />
+            <label th:for="content"> 내용 </label>
+            <textarea th:field="*{content}" class="form-control"  rows="3" placeholder="write your trouble"
+                      th:class="${#fields.hasErrors('content')}? 'form-control fieldError' : 'form-control'"/>
+            <div th:if="${#fields.hasErrors('content')}" th:errors="*{content}" th:class="field-error"></div>
         </div>
         <!-- Generation -->
         <div>
@@ -23,6 +25,19 @@
                 <label th:for="${#ids.prev('generation')}" th:text="${generation.description}" class="form-check-label">20-30대</label>
             </div>
         </div>
+        <!-- multi checkbox -->
+        <div>
+            <div>Categories</div>
+            <div th:each="category : ${categories}" class="form-check form-check-inline">
+                <input type="checkbox" th:field="*{categoryId}" th:value="${category.id}" class="form-check-input"
+                       th:class="${#fields.hasErrors('categoryId')}? 'form-check-input fieldError' : 'form-check-input'">
+                <label th:for="${#ids.prev('categoryId')}" th:text="${category.name}" class="form-check-label">운동</label>
+            </div>
+            <div th:if="${#fields.hasErrors('categoryId')}" th:errors="*{categoryId}" th:class="field-error"></div>
+
+        </div>
+
+        <hr class="my-4">
         <input type="hidden" th:field="*{generation}" />
         <input type="hidden" th:field="*{createDate}" />
 

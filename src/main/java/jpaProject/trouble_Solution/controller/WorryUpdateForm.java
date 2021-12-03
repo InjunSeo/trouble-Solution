@@ -11,7 +11,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @Getter @Setter
-public class WorrySaveForm {
+public class WorryUpdateForm {
     private Long id;
 
     private Member member;
