@@ -2,9 +2,14 @@
 ___
 ## 1. Member Domain
 ### 1.1. 회원 관련
+* 고민글 쓰기
+![gominNo_addWorry](https://user-images.githubusercontent.com/50542537/144622360-fe94c97c-0b6c-4aa6-9ed4-3cf896229720.png)
+* 마이페이지
+![gominNo_MyPage](https://user-images.githubusercontent.com/50542537/144622363-5783f432-cf86-4a5d-b444-da4a7a59a890.png)
 * 회원 등록
-![이미지](img/gominNO_SignUp.png "SignUp")
-*회원 목록 조회
+![gominNo_SignUp](https://user-images.githubusercontent.com/50542537/144622369-21744c91-88c6-44bf-8a3d-28fc9a25fc43.png)
+*고민글 상세 조회
+![gominNo_worryDesc](https://user-images.githubusercontent.com/50542537/144622372-c820677f-fee7-434b-8393-699aeafd6347.png)
   
 ### 1.2. 
 
