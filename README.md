@@ -1,16 +1,31 @@
-# Trouble-solution: BackEnd
+# Trouble-solution: Web Service
 ___
+
+# 상세 화면
+___
+## 회원 등록 화면
+* 회원 등록 시, ID와 password 필수 입력
+  ![gominNo_SignUp](https://user-images.githubusercontent.com/50542537/144622369-21744c91-88c6-44bf-8a3d-28fc9a25fc43.png)
+___
+## 고민글
+* 고민글 쓰기
+  ![gominNo_addWorry](https://user-images.githubusercontent.com/50542537/144622360-fe94c97c-0b6c-4aa6-9ed4-3cf896229720.png)
+
+* 고민글 수정
+  ![gominNo_editWorry](https://user-images.githubusercontent.com/50542537/144868050-5b02a03a-2833-444e-9ff6-70c23b4f9282.png)
+___
+## 게시판
+* 고민글 상세 조회
+  ![gominNo_worryDesc](https://user-images.githubusercontent.com/50542537/144622372-c820677f-fee7-434b-8393-699aeafd6347.png)
+___
+## 마이페이지
+* 로그인한 경우, 마이페이지에서 사용자가 작성한 고민글, 답변, 채택받은 답변 수를 볼 수 있다.
+  ![gominNo_MyPage](https://user-images.githubusercontent.com/50542537/144622363-5783f432-cf86-4a5d-b444-da4a7a59a890.png)
+
+___
+# 도메인 별 개발 구조
 ## 1. Member Domain
 ### 1.1. 회원 관련
-* 고민글 쓰기
-![gominNo_addWorry](https://user-images.githubusercontent.com/50542537/144622360-fe94c97c-0b6c-4aa6-9ed4-3cf896229720.png)
-* 마이페이지
-![gominNo_MyPage](https://user-images.githubusercontent.com/50542537/144622363-5783f432-cf86-4a5d-b444-da4a7a59a890.png)
-* 회원 등록
-![gominNo_SignUp](https://user-images.githubusercontent.com/50542537/144622369-21744c91-88c6-44bf-8a3d-28fc9a25fc43.png)
-*고민글 상세 조회
-![gominNo_worryDesc](https://user-images.githubusercontent.com/50542537/144622372-c820677f-fee7-434b-8393-699aeafd6347.png)
-  
 ### 1.2. 
 
 ## 2. Worry Domain
@@ -34,7 +49,7 @@ ___
 * 답변 조회
 * 답변 수정
 ### 3.2. Class
-___
+
 ## 4. Controller
 ### 4.1. AccountController
 * member account 관련
