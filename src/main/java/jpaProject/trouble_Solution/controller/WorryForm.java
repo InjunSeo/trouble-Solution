@@ -24,6 +24,7 @@ public class WorryForm {
     private String content;
 
     private LocalDateTime createDate;
+
     @NotNull(message = "세대 선택은 필수입니다.")
     private GenerationStatus generation;
 
