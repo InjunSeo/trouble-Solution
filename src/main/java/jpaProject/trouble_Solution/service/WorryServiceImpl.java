@@ -2,6 +2,7 @@ package jpaProject.trouble_Solution.service;
 
 import jpaProject.trouble_Solution.domain.Categories;
 import jpaProject.trouble_Solution.domain.Member;
+import jpaProject.trouble_Solution.domain.SolvedStatus;
 import jpaProject.trouble_Solution.domain.Worry;
 import jpaProject.trouble_Solution.repository.WorryRepository;
 import lombok.RequiredArgsConstructor;
@@ -14,8 +15,8 @@ import java.util.List;
 @Transactional(readOnly = true)
 @RequiredArgsConstructor
 public class WorryServiceImpl implements WorryService{
-    private final WorryRepository worryRepository;
 
+    private final WorryRepository worryRepository;
 
     @Override
     @Transactional(readOnly = false)
@@ -25,10 +26,11 @@ public class WorryServiceImpl implements WorryService{
 
     @Override
     @Transactional(readOnly = false)
-    public void updateWorry(Long worryId, String title, String content) {
+    public void updateWorry(Long worryId, String title, String content, SolvedStatus solvedStatus) {
         Worry findWorry = worryRepository.findById(worryId);
         findWorry.setTitle(title);
         findWorry.setContent(content);
+        findWorry.setSolvedStatus(solvedStatus);
     }
 
     @Override
