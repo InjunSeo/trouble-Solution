@@ -1,9 +1,6 @@
 package jpaProject.trouble_Solution.controller;
 
-import jpaProject.trouble_Solution.domain.Categories;
-import jpaProject.trouble_Solution.domain.GenerationStatus;
-import jpaProject.trouble_Solution.domain.Solution;
-import jpaProject.trouble_Solution.domain.Worry;
+import jpaProject.trouble_Solution.domain.*;
 import jpaProject.trouble_Solution.repository.CategoriesRepositoryImpl;
 import jpaProject.trouble_Solution.service.SolutionService;
 import jpaProject.trouble_Solution.service.WorryService;
@@ -15,6 +12,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -35,12 +33,34 @@ public class SolutionController {
 
         return categoriesList;
     }
+
+    @ModelAttribute("solvedStatuses")
+    public SolvedStatus[] solvedStatuses(){
+        return SolvedStatus.values();
+    }
+
     @GetMapping("/worrys/{worryId}")
     public String worry(@PathVariable Long worryId, Model model) {
         Worry worry = worryService.findWorry(worryId);
         List<Solution> solutions = solutionService.findByWorry(worry);
+        List<CategoryWorry> categoryWorries = worry.getCategoryWorries();
 
-        model.addAttribute("worry", worry);
+        WorryUpdateForm worryForm = new WorryUpdateForm();
+        List<Long> categoryId = new ArrayList<>();
+        for (CategoryWorry categoryWorry : categoryWorries) {
+            Categories category = categoryWorry.getCategory();
+            Long id = category.getId();
+            categoryId.add(id);
+        }
+        worryForm.setId(worry.getId());
+        worryForm.setMember(worry.getMember());
+        worryForm.setTitle(worry.getTitle());
+        worryForm.setContent(worry.getContent());
+        worryForm.setGeneration(worry.getGeneration());
+        worryForm.setCategoryId(categoryId);
+        worryForm.setSolvedStatus(worry.getSolvedStatus());
+
+        model.addAttribute("worryForm", worryForm);
         model.addAttribute("solutions", solutions);
 
         return "worrys/worry";

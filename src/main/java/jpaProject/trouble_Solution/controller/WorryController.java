@@ -1,8 +1,6 @@
 package jpaProject.trouble_Solution.controller;
 
-import jpaProject.trouble_Solution.domain.Categories;
-import jpaProject.trouble_Solution.domain.GenerationStatus;
-import jpaProject.trouble_Solution.domain.Worry;
+import jpaProject.trouble_Solution.domain.*;
 import jpaProject.trouble_Solution.repository.CategoriesRepositoryImpl;
 import jpaProject.trouble_Solution.service.WorryService;
 import lombok.RequiredArgsConstructor;
@@ -19,6 +17,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -38,6 +37,11 @@ public class WorryController {
         List<Categories> categoriesList = categoriesRepository.findAll();
 
         return categoriesList;
+    }
+
+    @ModelAttribute("solvedStatuses")
+    public SolvedStatus[] solvedStatuses(){
+        return SolvedStatus.values();
     }
 
     @GetMapping("/worrys/new")
@@ -78,27 +82,42 @@ public class WorryController {
         return "worrys/worryList";
     }
 
-    @GetMapping("worrys/{worryId}/edit")
+    @GetMapping("/worrys/{worryId}/edit")
     public String updateWorryForm(@PathVariable("worryId") Long worryId, Model model) {
         Worry worry = worryService.findWorry(worryId);
-        WorryForm form = new WorryForm();
-        form.setId(worry.getId());
-        form.setTitle(worry.getTitle());
-        form.setContent(worry.getContent());
-        form.setGeneration(worry.getGeneration());
-        form.setMember(worry.getMember());
-        form.setCreateDate(worry.getCreateDate());
+        List<CategoryWorry> categoryWorries = worry.getCategoryWorries();
 
-        model.addAttribute("form", form);
+        WorryUpdateForm worryForm = new WorryUpdateForm();
+        List<Long> categoryId = new ArrayList<>();
+        for (CategoryWorry categoryWorry : categoryWorries) {
+            Categories category = categoryWorry.getCategory();
+            Long id = category.getId();
+            categoryId.add(id);
+        }
+        worryForm.setId(worry.getId());
+        worryForm.setTitle(worry.getTitle());
+        worryForm.setMember(worry.getMember());
+        worryForm.setContent(worry.getContent());
+        worryForm.setGeneration(worry.getGeneration());
+        worryForm.setCategoryId(categoryId);
+        worryForm.setSolvedStatus(worry.getSolvedStatus());
+
+        model.addAttribute("worryForm", worryForm);
         return "worrys/updateWorryForm";
     }
 
     @PostMapping("worrys/{worryId}/edit")
-    public String updateWorry(@PathVariable Long worryId, @ModelAttribute("form") WorryForm worryForm) {
+    public String updateWorry(@PathVariable Long worryId, @Validated @ModelAttribute("worryForm") WorryUpdateForm worryForm, BindingResult result) {
 
         log.info("form.generation ={}", worryForm.getGeneration());
+        log.info("form.categories={}", worryForm.getCategoryId());
 
-        worryService.updateWorry(worryId, worryForm.getTitle(), worryForm.getContent());
+        if (result.hasErrors()) {
+            log.info("errors={}", result);
+            return "worrys/updateWorryForm";
+        }
+
+        worryService.updateWorry(worryId, worryForm.getTitle(), worryForm.getContent(), worryForm.getSolvedStatus());
         return "redirect:/worrys/{worryId}";
     }
 
