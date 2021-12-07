@@ -4,8 +4,8 @@ ___
 # 상세 화면
 ___
 ## 회원 등록 화면
-* 회원 등록 시, ID와 password 필수 입력
-  ![gominNo_SignUp](https://user-images.githubusercontent.com/50542537/144622369-21744c91-88c6-44bf-8a3d-28fc9a25fc43.png)
+* 회원 등록 시, ID와 password, 세대 필수 입력
+  ![gominNo_SignUp](https://user-images.githubusercontent.com/50542537/144974621-2b3e6ca2-461c-4feb-8711-2d90df68fcf2.png)
 ___
 ## 고민글
 * 고민글 쓰기
