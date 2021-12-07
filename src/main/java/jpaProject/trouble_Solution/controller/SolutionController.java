@@ -73,8 +73,8 @@ public class SolutionController {
         return "redirect:/worrys";
     }
 
-    /*@GetMapping("/worrys/{worryId}")*/
-    public String createForm() {
-        return "solutions/solutionForm.html";
+    @GetMapping("/worrys/{worryId}")
+    public String addSolution() {
+        return "solutions/addSolutionForm.html";
     }
 }
