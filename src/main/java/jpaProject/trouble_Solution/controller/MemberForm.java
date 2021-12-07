@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 
 @Getter
 @Setter
@@ -17,5 +18,6 @@ public class MemberForm {
 
     private String name;
 
+    @NotNull(message = "세대 선택은 필수입니다.")
     private GenerationStatus generation;
 }
