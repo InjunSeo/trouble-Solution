@@ -18,6 +18,7 @@ import java.util.List;
 @Controller
 @RequiredArgsConstructor
 public class SolutionController {
+
     private final SolutionService solutionService;
     private final WorryService worryService;
     private final CategoriesRepositoryImpl categoriesRepository;
@@ -73,7 +74,7 @@ public class SolutionController {
         return "redirect:/worrys";
     }
 
-    @GetMapping("/worrys/{worryId}")
+    @GetMapping("/solutions/{worryId}/new")
     public String addSolution() {
         return "solutions/addSolutionForm.html";
     }
