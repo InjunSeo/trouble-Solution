@@ -7,6 +7,10 @@ ___
 * 회원 등록 시, ID와 password, 세대 필수 입력
   ![gominNo_SignUp](https://user-images.githubusercontent.com/50542537/144974621-2b3e6ca2-461c-4feb-8711-2d90df68fcf2.png)
 ___
+## 로그인 화면
+* 로그인 실패 시, 검증해준다.
+  ![gominNo_loginForm](https://user-images.githubusercontent.com/50542537/145182978-310755a7-2345-4cf4-912f-98a5fe3672cc.png)
+___
 ## 고민글
 * 고민글 쓰기
   ![gominNo_addWorry](https://user-images.githubusercontent.com/50542537/144622360-fe94c97c-0b6c-4aa6-9ed4-3cf896229720.png)
