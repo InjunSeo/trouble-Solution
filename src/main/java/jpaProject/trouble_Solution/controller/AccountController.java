@@ -2,6 +2,7 @@ package jpaProject.trouble_Solution.controller;
 
 import jpaProject.trouble_Solution.domain.GenerationStatus;
 import jpaProject.trouble_Solution.domain.Member;
+import jpaProject.trouble_Solution.domain.SessionConst;
 import jpaProject.trouble_Solution.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -11,6 +12,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -56,13 +59,22 @@ public class AccountController {
     }
 
     @GetMapping("/login")
-    public String login() {
-
+    public String loginForm(@ModelAttribute("loginForm") LoginForm loginForm) {
         return "loginForm";
     }
 
     @PostMapping("login")
-    public String login(BindingResult bindingResult) {
-        return "";
+    public String login(@Valid @ModelAttribute("loginForm") LoginForm loginForm, BindingResult result, HttpServletRequest request) {
+        if (result.hasErrors()) {
+            return "/loginForm";
+        }
+        Member loginMember = memberService.login(loginForm.getMemberId(), loginForm.getPassword());
+        if (loginMember == null) {
+            result.reject("LoginFail", "아이디 또는 비밀번호가 맞지 않습니다.");
+            return "/loginForm";
+        }
+        HttpSession session = request.getSession();
+        session.setAttribute(SessionConst.LOGIN_MEMBER, loginMember);
+        return "redirect:/";
     }
 }
