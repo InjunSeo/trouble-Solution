@@ -40,5 +40,16 @@ public class MemberServiceImpl implements MemberService {
         return memberRepository.findById(memberId);
     }
 
+    @Override
+    public Member login(String loginId, String password) {
+        Member findMember = memberRepository.findById(loginId);
+        if (findMember == null) {
+            return null;
+        } else        if (findMember.getPassword().equals(password)) {
+            return findMember;
+        }
+        return null;
+    }
+
 
 }
