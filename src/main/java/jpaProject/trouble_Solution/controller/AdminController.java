@@ -1,6 +1,7 @@
 package jpaProject.trouble_Solution.controller;
 
 import jpaProject.trouble_Solution.domain.Member;
+import jpaProject.trouble_Solution.domain.SessionConst;
 import jpaProject.trouble_Solution.domain.Solution;
 import jpaProject.trouble_Solution.domain.Worry;
 import jpaProject.trouble_Solution.service.MemberService;
@@ -11,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.SessionAttribute;
 
 import java.util.List;
 
@@ -22,8 +24,13 @@ public class AdminController {
     private final WorryService worryService;
     private final SolutionService solutionService;
 
-    @GetMapping("/admin/mypage/{memberId}")
-    public String myPage(@PathVariable String memberId, Model model) {
+    @GetMapping("/admin/memberDesc/{memberId}")
+    public String myPage(@PathVariable String memberId,
+                         @SessionAttribute(name = SessionConst.LOGIN_ADMIN, required = false) Member loginAdmin, Model model) {
+        if (loginAdmin == null) {
+            return "home";
+        }
+
         Member member = memberService.findOne(memberId);
         List<Worry> worries = worryService.findByMember(member);
         List<Solution> solutions = solutionService.findByMember(memberId);
@@ -31,6 +38,6 @@ public class AdminController {
         model.addAttribute("worries", worries);
         model.addAttribute("solutions", solutions);
 
-        return "members/myPage";
+        return "members/memberDesc";
     }
 }

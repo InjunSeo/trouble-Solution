@@ -17,7 +17,7 @@
             </thead>
             <tbody>
             <tr th:each="member : ${members}">
-                <td><a href="myPage.html" th:href="@{|/admin/mypage/${member.id}|}" th:text="${member.id}"></a></td>
+                <td><a href="memberDesc.html" th:href="@{|/admin/mypage/${member.id}|}" th:text="${member.id}"></a></td>
                 <td th:text="${member.name}"></td>
                 <td th:text="${member.generation}"></td>
                 <td th:text="${member.createDate}"></td>
