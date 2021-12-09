@@ -31,11 +31,22 @@
                             <li><a class="dropdown-item" href="#">Something else here</a></li>
                         </ul>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/members">members</a>
+                    <li class="nav-item" th:if="${session.LoginMember != null}">
+                        <a class="nav-link" href="/members"  th:text="${session.LoginMember.name}">MyPage</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/login">login</a>
+                    <li class="nav-item" th:if="${session.LoginMember == null}">
+                        <a class="nav-link" href="/members/new"  th:text="'Join'">Join</a>
+                    </li>
+                    <li class="nav-item" th:if="${session.LoginMember != null}">
+                        <!--<a class="nav-link" href="/login">login / LogOut</a>-->
+                        <form th:action="@{/logout}" method="post">
+                            <a class="nav-link">
+                                <button th:type="submit">Logout</button>
+                            </a>
+                        </form>
+                    </li>
+                    <li class="nav-item" th:if="${session.LoginMember == null}">
+                        <a class="nav-link" href="/login">login </a>
                     </li>
                 </ul>
                 <form class="d-flex">
