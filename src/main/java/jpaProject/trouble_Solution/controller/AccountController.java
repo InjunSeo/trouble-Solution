@@ -24,7 +24,7 @@ public class AccountController {
     private final MemberService memberService;
 
     @ModelAttribute("generations")
-    public GenerationStatus[] generationStatuses(){
+    public GenerationStatus[] generationStatuses() {
         return GenerationStatus.values();
     }
 
@@ -50,7 +50,9 @@ public class AccountController {
         return "redirect:/";
     }
 
-    /** 회원 전체 조회      */
+    /**
+     * 회원 전체 조회
+     */
     @GetMapping("/members")
     public String List(Model model) {
         List<Member> members = memberService.findMembers();
@@ -75,6 +77,15 @@ public class AccountController {
         }
         HttpSession session = request.getSession();
         session.setAttribute(SessionConst.LOGIN_MEMBER, loginMember);
+        return "redirect:/";
+    }
+
+    @PostMapping("/logout")
+    public String logout(HttpServletRequest request) {
+        HttpSession session = request.getSession(false);
+        if (session != null) {
+            session.invalidate();
+        }
         return "redirect:/";
     }
 }
