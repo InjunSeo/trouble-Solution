@@ -5,6 +5,7 @@ import jpaProject.trouble_Solution.repository.CategoriesRepositoryImpl;
 import jpaProject.trouble_Solution.service.SolutionService;
 import jpaProject.trouble_Solution.service.WorryService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import java.util.ArrayList;
 import java.util.List;
 
+@Slf4j
 @Controller
 @RequiredArgsConstructor
 public class SolutionController {
@@ -24,19 +26,19 @@ public class SolutionController {
     private final CategoriesRepositoryImpl categoriesRepository;
 
     @ModelAttribute("generations")
-    public GenerationStatus[] generationStatuses(){
+    public GenerationStatus[] generationStatuses() {
         return GenerationStatus.values();
     }
 
     @ModelAttribute("categories")
-    public List<Categories> categories(){
+    public List<Categories> categories() {
         List<Categories> categoriesList = categoriesRepository.findAll();
 
         return categoriesList;
     }
 
     @ModelAttribute("solvedStatuses")
-    public SolvedStatus[] solvedStatuses(){
+    public SolvedStatus[] solvedStatuses() {
         return SolvedStatus.values();
     }
 
@@ -75,7 +77,18 @@ public class SolutionController {
     }
 
     @GetMapping("/solutions/{worryId}/new")
-    public String addSolution() {
-        return "solutions/addSolutionForm.html";
+    public String addSolutionForm(@PathVariable("worryId") Long worryId, Model model) {
+
+        model.addAttribute("solutionForm", new Solution());
+        model.addAttribute("worryId", worryId);
+        return "solutions/addSolutionForm";
+    }
+
+    @PostMapping("/solutions/{worryId}/new")
+    public String addSolution(@ModelAttribute("solutionForm") SolutionSaveForm solutionForm) {
+        log.info("Solver ID={}", solutionForm.getMember());
+        log.info("Solver's solution={}", solutionForm.getContent());
+
+        return "redirect:/worrys/{worryId}";
     }
 }
