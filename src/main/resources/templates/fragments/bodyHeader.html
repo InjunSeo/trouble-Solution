@@ -31,19 +31,19 @@
                             <li><a class="dropdown-item" href="#">Something else here</a></li>
                         </ul>
                     </li>
-                    <li class="nav-item" th:if="${session.LoginMember != null}">
-                        <a class="nav-link" href="/members"  th:text="${session.LoginMember.name}">MyPage</a>
+                    <li class="nav-item dropdown" th:if="${session.LoginMember != null}">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown2" role="button" data-bs-toggle="dropdown" aria-expanded="false"
+                           th:text="${session.LoginMember.name}"> MyPage
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <li><a class="dropdown-item" href="/members/new" > MyPage </a></li>
+                            <li><a class="dropdown-item" th:action="@{/logout}" >Logout</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="#">Something else here</a></li>
+                        </ul>
                     </li>
                     <li class="nav-item" th:if="${session.LoginMember == null}">
                         <a class="nav-link" href="/members/new"  th:text="'Join'">Join</a>
-                    </li>
-                    <li class="nav-item" th:if="${session.LoginMember != null}">
-                        <!--<a class="nav-link" href="/login">login / LogOut</a>-->
-                        <form th:action="@{/logout}" method="post">
-                            <a class="nav-link">
-                                <button th:type="submit">Logout</button>
-                            </a>
-                        </form>
                     </li>
                     <li class="nav-item" th:if="${session.LoginMember == null}">
                         <a class="nav-link" href="/login">login </a>
