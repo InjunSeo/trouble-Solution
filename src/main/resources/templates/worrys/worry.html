@@ -4,7 +4,7 @@
 <body>
 <div class="container">
     <div th:replace="fragments/bodyHeader :: bodyHeader"/>
-        <H2>  </H2>
+        <H2>  고민글 상세 </H2>
         <div class="form-group">
             <label th:for="title">제목</label>
             <input type="text" th:field="*{worryForm.title}" class="form-control" readonly>
@@ -49,7 +49,7 @@
     <hr class="my-4">
     <br/>
     <div class="row">
-        <div class="col">
+        <div class="col" th:if="${session.LoginMember.id}==*{worryForm.member.id}">
             <button class="w-100 btn btn-primary btn-lg"
                     onclick="location.href='updateWorryForm.html'"
                     th:onclick="|location.href='@{/worrys/{worryId}/edit (worryId=${worryForm.id})}'|" type="button"> 고민 수정 </button>
@@ -62,7 +62,14 @@
                     th:onclick="|location.href='@{/worrys}'|"
                     type="button">목록으로</button>
         </div>
+        <div class="col" th:if="${session.LoginMember.id} != *{worryForm.member.id}">
+            <button class="w-100 btn btn-primary btn-lg"
+                    onclick="location.href='../solutions/addSolutionForm.html'"
+                    th:onclick="|location.href='@{/solutions/{worryId}/new (worryId=${worryForm.id})'|" type="button">답글 달기</button>
+        </div>
+
     </div>
+    <br/>
     <table class="table table-striped">
         <thead>
         <tr>
