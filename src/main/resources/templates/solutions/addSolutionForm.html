@@ -5,13 +5,15 @@
 <div class="container">
     <div th:replace="fragments/bodyHeader :: bodyHeader"/>
 
-    <form th:action="@{/solutions/{worryId}(worryId=${worryId})/new}" th:object="${solutionForm}" method="post">
-        <div class="form-group" readonly>
-            <label th:for="LoginMember"> 작성자 </label>
-            <text th:value="${session.LoginMember}" th:text="${session.LoginMember.id}" class="form-control"
-                  rows="3"></text>
-                      <!--th:class="${#fields.hasErrors('session.LoginMember')}? 'form-control fieldError' : 'form-control'"/>-->
-            <!--<div th:if="${#fields.hasErrors('LoginMember')}" th:errors="*${session.LoginMember}" th:class="field-error"></div>-->
+    <form th:action th:object="${solutionForm}" method="post">
+        <div class="form-group">
+            <label th:for="worry"> 고민글 </label>
+            <!--<text id="worry" th:field="*{worry}" class="form-control" rows="3" readonly></text>-->
+            <input type="text" th:field="*{worry.id}" class="form-control" readonly>
+        </div>
+        <div class="form-group" >
+            <label th:for="member">writer</label>
+            <input type="text" th:field="*{member.id}" class="form-control" rows="3" readonly>
         </div>
         <div class="form-group">
             <label th:for="content"> 내용 </label>
@@ -21,12 +23,6 @@
         </div>
 
         <hr class="my-4">
-
-        <!--  <div class="form-group">
-              <label th:for="generation">범주</label>
-              <input type="checkbox" th:value="${form.categories.name}" th:field="*{categories.name}" class="form-control" placeholder="고민글의 범주를 선택하세요">
-          </div>-->
-
         <button type="submit" class="btn btn-primary">Submit</button>
     </form>
     <br/>

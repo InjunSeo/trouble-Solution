@@ -8,11 +8,16 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -77,17 +82,37 @@ public class SolutionController {
     }
 
     @GetMapping("/solutions/{worryId}/new")
-    public String addSolutionForm(@PathVariable("worryId") Long worryId, Model model) {
+    public String addSolutionForm(@PathVariable("worryId") Long worryId, @ModelAttribute("solutionForm") SolutionSaveForm solutionForm, HttpServletRequest request) {
+        Worry worry = worryService.findWorry(worryId);
 
-        model.addAttribute("solutionForm", new Solution());
-        model.addAttribute("worryId", worryId);
+        HttpSession session = request.getSession(false);
+        Member loginMember = (Member) session.getAttribute(SessionConst.LOGIN_MEMBER);
+
+        solutionForm.setWorry(worry);
+        solutionForm.setMember(loginMember);
+
         return "solutions/addSolutionForm";
     }
 
     @PostMapping("/solutions/{worryId}/new")
-    public String addSolution(@ModelAttribute("solutionForm") SolutionSaveForm solutionForm) {
+    public String addSolution(@Valid @ModelAttribute("solutionForm") SolutionSaveForm solutionForm, BindingResult result) {
         log.info("Solver ID={}", solutionForm.getMember());
         log.info("Solver's solution={}", solutionForm.getContent());
+        log.info("Worry ={}", solutionForm.getWorry());
+
+        if (result.hasErrors()) {
+            log.info("error = {}", result);
+            return "solutions/addSolutionForm";
+        }
+
+        Solution solution = new Solution();
+
+        solution.setMember(solutionForm.getMember());
+        solution.setWorry(solutionForm.getWorry());
+        solution.setContent(solutionForm.getContent());
+        solution.setCreateDate(LocalDateTime.now());
+        solution.setAcceptedStatus(AcceptedStatus.READY);
+        solutionService.write(solution);
 
         return "redirect:/worrys/{worryId}";
     }
