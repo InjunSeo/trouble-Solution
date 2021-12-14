@@ -65,7 +65,7 @@
         <div class="col" th:if="${session.LoginMember.id} != *{worryForm.member.id}">
             <button class="w-100 btn btn-primary btn-lg"
                     onclick="location.href='../solutions/addSolutionForm.html'"
-                    th:onclick="|location.href='@{/solutions/{worryId}/new (worryId=${worryForm.id})'|" type="button">답글 달기</button>
+                    th:onclick="|location.href='@{/solutions/{worryId}/new (worryId=${worryForm.id})}'|" type="button">답글 달기</button>
         </div>
 
     </div>

@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -45,13 +47,18 @@ public class WorryController {
     }
 
     @GetMapping("/worrys/new")
-    public String createForm(Model model) {
-        model.addAttribute("worryForm", new WorryForm());
+    public String createForm(@ModelAttribute("worryForm") WorryForm worryForm, HttpServletRequest request) {
+        HttpSession session = request.getSession(false);
+        Member loginMember = (Member) session.getAttribute(SessionConst.LOGIN_MEMBER);
+        worryForm.setMember(loginMember);
+
         return "worrys/createWorryForm";
     }
 
     @PostMapping("/worrys/new")
     public String create(@Validated @ModelAttribute("worryForm") WorrySaveForm worryForm, BindingResult result) {
+
+        log.info("form.member={}", worryForm.getMember());
         log.info("form.generation={}", worryForm.getGeneration());
         log.info("form.categories={}", worryForm.getCategoryId());
 
@@ -94,6 +101,7 @@ public class WorryController {
             Long id = category.getId();
             categoryId.add(id);
         }
+
         worryForm.setId(worry.getId());
         worryForm.setTitle(worry.getTitle());
         worryForm.setMember(worry.getMember());
