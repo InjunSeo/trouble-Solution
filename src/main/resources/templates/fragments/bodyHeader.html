@@ -33,13 +33,14 @@
                     </li>
                     <li class="nav-item dropdown" th:if="${session.LoginMember != null}">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown2" role="button" data-bs-toggle="dropdown" aria-expanded="false"
-                           th:text="${session.LoginMember.name}"> MyPage
+                           th:text="${session.LoginMember.name}"> userName
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <li><a class="dropdown-item" href="/members/new" > MyPage </a></li>
+                            <li><a class="dropdown-item" href="../members/memberDesc.html" th:href="@{|/admin/profile/${session.LoginMember.id}|}" > MyPage </a></li>
                             <li><a class="dropdown-item" th:action="@{/logout}" >Logout</a></li>
                             <li><hr class="dropdown-divider"></li>
-                            <li><a class="dropdown-item" href="#">Something else here</a></li>
+                            <li><a class="dropdown-item" href="#" th:href="@{|/admin/profile/${session.LoginMember.id}|}">my worries</a></li>
+                            <li><a class="dropdown-item" th:href="@{|/admin/profile/${session.LoginMember.id}|}">my solutions</a></li>
                         </ul>
                     </li>
                     <li class="nav-item" th:if="${session.LoginMember == null}">
