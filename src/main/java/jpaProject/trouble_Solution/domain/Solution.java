@@ -50,7 +50,6 @@ public class Solution {
     public void addAcceptedStatus(AcceptedStatus acceptedStatus) {
         this.acceptedStatus = acceptedStatus;
         if (acceptedStatus == AcceptedStatus.ACCEPTED) {
-            worry.addSolvedStatus(SolvedStatus.SOLVED);
             member.getAcceptedSolutions().add(this);
         }
         else member.getAcceptedSolutions().remove(this);
